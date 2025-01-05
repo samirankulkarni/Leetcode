@@ -1,0 +1,43 @@
+class Solution {
+public:
+    char fun(char a,int s){ 
+        s= s%26;
+        string t = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
+        if(s>=0){
+            int i = int(a-'a');
+            int j = i+s;
+            return t[j];
+        }else{
+            int i = 26+int(a-'a');
+            int j = i+s;
+            return t[j];
+        }
+        return 'a';
+    }
+
+    string shiftingLetters(string s, vector<vector<int>>& shifts) {
+        vector<int> a(s.size()+1,0);
+        for(auto &v:shifts){
+            if(v[2]==1){
+                a[v[0]]++;
+                a[v[1]+1]--;
+            }else{
+                a[v[0]]--;
+                a[v[1]+1]++;
+            }
+        }
+        for(int i=1;i<=s.size();i++) a[i] += a[i-1];
+        string ans = "";
+        for(int i:a) cout<<i<<' ';
+        cout<<'\n';
+        for(int i=0;i<s.size();i++){
+            ans += fun(s[i],a[i]);
+        }
+        return ans;
+    }
+    // d z t z
+    // -1 1 0 0 0
+    // -1 2 -1 0 0
+    // -1 1 0 0 0
+    //c a t z
+};
